@@ -12,7 +12,7 @@ let express = require('express'),
 mongoose.connect('mongodb+srv://majun1997:majun97MAjun@junma-kvvlv.mongodb.net', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-   
+    useFindAndModify:false
 });
 mongoose.Promise = global.Promise;
 

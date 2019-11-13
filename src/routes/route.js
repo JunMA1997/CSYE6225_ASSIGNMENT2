@@ -28,8 +28,8 @@ module.exports = function (app) {
          
 
     // // Routes for get, update and delete.
-    // app.route('/list/:listid')
-    //     .get(Controller.get)
-    //     .put(Controller.put)
-    //     .delete(Controller.delete);
+    app.route('/list/:listid')
+        .get(controller.get)
+        .put(controller.put)
+        .delete(controller.delete);
 };

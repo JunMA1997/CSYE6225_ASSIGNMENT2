@@ -69,7 +69,8 @@ exports.get = function (request, response) {
         response.status(200);
         response.json(list);
     };
-    Service.get(request.params.Id)
+    //console.log(request.params)
+    Service.get(request.params.listid)
         .then(resolve)
         .catch(renderErrorResponse(response));
 };
@@ -86,7 +87,8 @@ exports.put = function (request, response) {
         response.status(200);
         response.json(list);
     };
-    list._id = request.params.Id;
+    list._id = request.params.listid;
+    //console.log(list);
     Service.update(list)
         .then(resolve)
         .catch(renderErrorResponse(response));
@@ -105,7 +107,7 @@ exports.delete = function (request, response) {
             message: " Successfully deleted"
         });
     };
-    Service.delete(request.params.Id)
+    Service.delete(request.params.listid)
         .then(resolve)
         .catch(renderErrorResponse(response));
 };
