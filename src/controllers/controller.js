@@ -19,6 +19,7 @@ exports.create = function (request, response) {
     {
         response.status(400);
         response.json("email error");
+        return 
     }
     //password check
     var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
@@ -26,6 +27,7 @@ exports.create = function (request, response) {
     {
         response.status(400);
         response.json("password too weak");
+        return
     }
     //encodeing the password
     var password = bcrypt.hashSync(request.body.password, 10); 
@@ -36,6 +38,7 @@ exports.create = function (request, response) {
     const resolve = (list) => {
         response.status(200);
         response.json(list)
+        return
     };
     const sql=`INSERT INTO \`user\` (\`first_name\`, \`last_name\`, \`password\`, \`email_address\`) VALUES ('${first_name}', '${last_name}', '${password}', '${email}');`
     //console.log(sql)

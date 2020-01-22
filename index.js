@@ -24,5 +24,7 @@ app.use(function (req, res, next) {
 let initApp = require('./src/app');
 initApp(app);
 
-app.listen(port);
+
 console.log('server started on: ' + port);
+
+module.exports = app.listen(port);
