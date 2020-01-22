@@ -70,7 +70,7 @@ describe ("CRUD OPERATIONS", function(){
                 "password":"majun97MAjun!"
             })
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(204);
                 console.log("Response Body:", res.body);   
                 done()             
             })       

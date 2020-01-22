@@ -18,7 +18,7 @@ exports.create = function (request, response) {
     if(!re.test(String(email).toLowerCase()))
     {
         response.status(400);
-        response.json("email error");
+        response.json();
         return 
     }
     //password check
@@ -26,7 +26,7 @@ exports.create = function (request, response) {
     if(!strongRegex.test(String(request.body.password)))
     {
         response.status(400);
-        response.json("password too weak");
+        response.json();
         return
     }
     //encodeing the password
@@ -37,7 +37,7 @@ exports.create = function (request, response) {
     //if successfully query, return is here       
     const resolve = (list) => {
         response.status(200);
-        response.json(list)
+        response.json()
         return
     };
     const sql=`INSERT INTO \`user\` (\`first_name\`, \`last_name\`, \`password\`, \`email_address\`) VALUES ('${first_name}', '${last_name}', '${password}', '${email}');`
@@ -48,7 +48,7 @@ exports.create = function (request, response) {
         {
             //exist, return 400
             response.status(400)
-            response.json({message:'email exist'});
+            response.json();
             return;
         }
         //not exist,then create
@@ -68,7 +68,7 @@ exports.get = function (request, response) {
     
     if (!credentials) {
         response.statusCode = 400
-        response.json({message:'something wrong with http'});
+        response.json();
     } else {
         //user existance check
         query(`SELECT * FROM user WHERE email_address='${credentials.name}'`).then(function (data) {
@@ -81,7 +81,7 @@ exports.get = function (request, response) {
                     if(err) {
                         //server error...
                         response.status(400)
-                        response.json({message:'Comparison error:'})
+                        response.json()
                         //console.log('Comparison error: ', err);
                     }
                     if(res){
@@ -95,7 +95,7 @@ exports.get = function (request, response) {
                     {
                         //password wrong
                         response.status(400)
-                        response.json({message:'password error:'})
+                        response.json()
                         return
                     }                    
                 })                
@@ -103,7 +103,7 @@ exports.get = function (request, response) {
             }
             else{
                 response.status(400)
-                response.json({message:'no user'})
+                response.json()
             }            
         }).catch(renderErrorResponse(response));
     }
@@ -120,7 +120,7 @@ exports.update = function (request, response) {
     if(!strongRegex.test(String(request.body.password)))
     {
         response.status(400);
-        response.json("password too weak");
+        response.json();
     }
     //encodeing the password
     var password = bcrypt.hashSync(request.body.password, 10);    
@@ -130,7 +130,7 @@ exports.update = function (request, response) {
     var credentials = auth(request)   
     if (!credentials) {
         response.statusCode = 400
-        response.json({message:'something wrong with http'});
+        response.json();
     } else {
         query(`SELECT * FROM user WHERE email_address='${credentials.name}'`).then(function (data) {
             if(data.rows[0]!=undefined)
@@ -139,29 +139,29 @@ exports.update = function (request, response) {
                 bcrypt.compare(credentials.pass,data.rows[0].password,function(err, res) {                    
                     if(err) {
                         response.status(400)
-                        response.json({message:'Comparison error:'})
+                        response.json()
                     }
                     if(res){                        
                         const sql=`UPDATE \`user\` SET \`first_name\`='${first_name}',\`last_name\`='${last_name}',\`password\`='${password}' WHERE \`ID\`=${data.rows[0].ID}`
                         //access granted begin update
                         //console.log(sql)
                         query(sql).then(function(){
-                            response.status(200)
-                            response.json({message:'update successfully'})
+                            response.status(204)
+                            response.json()
                         })
                         return
                     }
                     else
                     {
                         response.status(400)
-                        response.json({message:'password error:'})
+                        response.json()
                         return
                     }                    
                 })
                 return;
             }
             response.status(400)
-            response.json({message:'no user'})
+            response.json()
         }).catch(renderErrorResponse(response));
     }
 };
@@ -175,9 +175,7 @@ let renderErrorResponse = (response) => {
     const errorCallback = (error) => {
         if (error) {
             response.status(500);
-            response.json({
-                message: error.message
-            });
+            response.json();
         }
     }
     return errorCallback;
