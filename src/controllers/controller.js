@@ -36,7 +36,7 @@ exports.create = function (request, response) {
     var last_name=request.body.last_name; 
     //if successfully query, return is here       
     const resolve = (list) => {
-        response.status(200);
+        response.status(201);
         response.json()
         return
     };
@@ -67,7 +67,7 @@ exports.get = function (request, response) {
     var credentials = auth(request)
     
     if (!credentials) {
-        response.statusCode = 400
+        response.statusCode = 401
         response.json();
     } else {
         //user existance check
@@ -94,7 +94,7 @@ exports.get = function (request, response) {
                     else
                     {
                         //password wrong
-                        response.status(400)
+                        response.status(401)
                         response.json()
                         return
                     }                    
@@ -102,7 +102,7 @@ exports.get = function (request, response) {
                 return;
             }
             else{
-                response.status(400)
+                response.status(401)
                 response.json()
             }            
         }).catch(renderErrorResponse(response));
@@ -129,7 +129,7 @@ exports.update = function (request, response) {
     //get login info
     var credentials = auth(request)   
     if (!credentials) {
-        response.statusCode = 400
+        response.statusCode = 401
         response.json();
     } else {
         query(`SELECT * FROM user WHERE email_address='${credentials.name}'`).then(function (data) {
@@ -153,14 +153,14 @@ exports.update = function (request, response) {
                     }
                     else
                     {
-                        response.status(400)
+                        response.status(401)
                         response.json()
                         return
                     }                    
                 })
                 return;
             }
-            response.status(400)
+            response.status(401)
             response.json()
         }).catch(renderErrorResponse(response));
     }
@@ -175,7 +175,9 @@ let renderErrorResponse = (response) => {
     const errorCallback = (error) => {
         if (error) {
             response.status(500);
-            response.json();
+            response.json({
+                message: error.message
+            });
         }
     }
     return errorCallback;

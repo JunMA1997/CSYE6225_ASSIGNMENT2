@@ -8,28 +8,28 @@ describe ("CRUD OPERATIONS", function(){
     var users = [
         {"first_name":"jun",
         "last_name":"ma",
-        "email_address":"52909794@qqqqqqqq.com",
-        "password":"maju97MAjun!"},//success
+        "email_address":"test@test.com",
+        "password":"QWERty1234!"},//success
         {"first_name":"jun",
         "last_name":"ma",
-        "email_address":"52909794@qq.com",
-        "password":"maju97MAjun!"},//due to dul email
+        "email_address":"test@test.com",
+        "password":"QWERty1234!"},//due to dul email
         {"first_name":"jun",
         "last_name":"ma",
-        "email_address":"52909794@qqqqq.com",
-        "password":"maju97MAjun"}//due to password
+        "email_address":"test@test1.com",
+        "password":"QWERty1234"}//due to password
     ]
-    // it("Should add Users in DB", (done) => {
+    it("Should add Users in DB", (done) => {
         
-    //     chai.request(server)
-    //         .post("/")
-    //         .send(users[0])
-    //         .end((err, res) => {
-    //             res.should.have.status(200);
-    //             console.log("Response Body:", res.body);   
-    //             done()             
-    //         })       
-    // })
+        chai.request(server)
+            .post("/")
+            .send(users[0])
+            .end((err, res) => {
+                res.should.have.status(201);
+                console.log("Response Body:", res.body);   
+                done()             
+            })       
+    })
     it("Shouldn't add Users in DB since dul email", (done) => {
         
         chai.request(server)
@@ -54,9 +54,19 @@ describe ("CRUD OPERATIONS", function(){
     it("Should get User in DB", (done) => {        
         chai.request(server)
             .get("/")
-            .auth('529097947@qq.com', 'majun97MAjun!')
+            .auth('test@test.com', 'QWERty1234!')
             .end((err, res) => {
                 res.should.have.status(200);
+                console.log("Response Body:", res.body);   
+                done()             
+            })       
+    })
+    it("Shouldn't get User in DB since wrong password", (done) => {        
+        chai.request(server)
+            .get("/")
+            .auth('test@test.com', 'qwer1234!')
+            .end((err, res) => {
+                res.should.have.status(401);
                 console.log("Response Body:", res.body);   
                 done()             
             })       
@@ -64,10 +74,10 @@ describe ("CRUD OPERATIONS", function(){
     it("Should update User in DB", (done) => {        
         chai.request(server)
             .put("/")
-            .auth('529097947@qq.com', 'majun97MAjun!')
+            .auth('test@test.com', 'QWERty1234!')
             .send({"first_name":"jun1",
                 "last_name":"ma1",
-                "password":"majun97MAjun!"
+                "password":"QWERty1234!"
             })
             .end((err, res) => {
                 res.should.have.status(204);

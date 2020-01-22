@@ -4,7 +4,7 @@ var mysql=require("mysql")
 var pool = mysql.createPool({
     host: "localhost",
     user: "majun",
-    password: "majun97MAjun",
+    password: "qwer1234",
     database: "majun"
 });
 /**
