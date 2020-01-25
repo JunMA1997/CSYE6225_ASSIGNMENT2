@@ -42,7 +42,7 @@ jobs: # a collection of steps
           command: |
             sudo apt-get install mysql-client
             mysql -h 127.0.0.1 -u majun -pqwer1234 --execute="CREATE DATABASE majun"
-      - run: # run tests
+      - run: # run tests 1
           name: test
           command: npm test
       - run: # run coverage report
