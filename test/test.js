@@ -19,7 +19,7 @@ describe ("CRUD OPERATIONS", function(){
         "email_address":"test@test1.com",
         "password":"QWERty1234"}//due to password
     ]
-    /*it("Should add Users in DB", (done) => {
+    it("Should add Users in DB", (done) => {
         
         chai.request(server)
             .post("/v1/user/self")
@@ -29,7 +29,7 @@ describe ("CRUD OPERATIONS", function(){
                 console.log("Response Body:", res.body);   
                 done()             
             })       
-    })*/
+    })
     //123
     it("Shouldn't add Users in DB since dul email", (done) => {
         
