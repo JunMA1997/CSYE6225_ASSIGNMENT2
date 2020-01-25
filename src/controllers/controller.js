@@ -40,8 +40,9 @@ exports.create = function (request, response) {
         response.json()
         return
     };
-    const sql=`INSERT INTO \`user\` (\`first_name\`, \`last_name\`, \`password\`, \`email_address\`) VALUES ('${first_name}', '${last_name}', '${password}', '${email}');`
-    //console.log(sql)
+    const uuidv1 = require('uuid/v1');
+    const sql=`INSERT INTO \`user\` (\`ID\`,\`first_name\`, \`last_name\`, \`password\`, \`email_address\`) VALUES (UUID(),'${first_name}', '${last_name}', '${password}', '${email}');`
+    console.log(sql)
     //find the email existance here
     query(`SELECT * FROM user WHERE email_address='${email}'`).then(function (data) {
         if(data.rows[0]!=undefined)
