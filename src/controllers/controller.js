@@ -40,6 +40,7 @@ exports.create = function (request, response) {
         response.json()
         return
     };
+
     const sql=`INSERT INTO \`user\` (\`ID\`,\`first_name\`, \`last_name\`, \`password\`, \`email_address\`) VALUES (UUID(),'${first_name}', '${last_name}', '${password}', '${email}');`
     console.log(sql)
     //find the email existance here
