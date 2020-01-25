@@ -22,7 +22,7 @@ describe ("CRUD OPERATIONS", function(){
     it("Should add Users in DB", (done) => {
         
         chai.request(server)
-            .post("/")
+            .post("/v1/user/self")
             .send(users[0])
             .end((err, res) => {
                 res.should.have.status(201);
@@ -33,7 +33,7 @@ describe ("CRUD OPERATIONS", function(){
     it("Shouldn't add Users in DB since dul email", (done) => {
         
         chai.request(server)
-            .post("/")
+            .post("/v1/user/self")
             .send(users[1])
             .end((err, res) => {
                 res.should.have.status(400);
@@ -43,7 +43,7 @@ describe ("CRUD OPERATIONS", function(){
     })
     it("Shouldn't add Users in DB since password is too weak", (done) => {        
         chai.request(server)
-            .post("/")
+            .post("/v1/user/self")
             .send(users[2])
             .end((err, res) => {
                 res.should.have.status(400);
@@ -53,7 +53,7 @@ describe ("CRUD OPERATIONS", function(){
     })
     it("Should get User in DB", (done) => {        
         chai.request(server)
-            .get("/")
+            .get("/v1/user/self")
             .auth('test@test.com', 'QWERty1234!')
             .end((err, res) => {
                 res.should.have.status(200);
@@ -63,7 +63,7 @@ describe ("CRUD OPERATIONS", function(){
     })
     it("Shouldn't get User in DB since wrong password", (done) => {        
         chai.request(server)
-            .get("/")
+            .get("/v1/user/self")
             .auth('test@test.com', 'qwer1234!')
             .end((err, res) => {
                 res.should.have.status(401);
@@ -73,7 +73,7 @@ describe ("CRUD OPERATIONS", function(){
     })
     it("Should update User in DB", (done) => {        
         chai.request(server)
-            .put("/")
+            .put("/v1/user/self")
             .auth('test@test.com', 'QWERty1234!')
             .send({"first_name":"jun1",
                 "last_name":"ma1",
@@ -86,3 +86,4 @@ describe ("CRUD OPERATIONS", function(){
             })       
     })
 })
+
