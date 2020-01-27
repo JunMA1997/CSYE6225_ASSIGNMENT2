@@ -143,9 +143,9 @@ exports.update = function (request, response) {
                         response.json()
                     }
                     if(res){                        
-                        const sql=`UPDATE \`user\` SET \`first_name\`='${first_name}',\`last_name\`='${last_name}',\`password\`='${password}' WHERE \`ID\`=${data.rows[0].ID}`
+                        const sql=`UPDATE \`user\` SET \`first_name\`='${first_name}',\`last_name\`='${last_name}',\`password\`='${password}' WHERE \`ID\`='${data.rows[0].ID}'`
                         //access granted begin update
-                        //console.log(sql)
+                        console.log(sql)
                         query(sql).then(function(){
                             response.status(204)
                             response.json()
